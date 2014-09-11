@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Game Demo</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      body {
+        font-family: monospace;
+        font-size: 12px;
+        background-color: #f0f0f0;
+        margin: 0px;
+        overflow: hidden;
+      }
+      #container {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      #stats { bottom: 0px; right: 0px; }
+      .bar-tab { right: 33% !important; left: 33% !important; color: white; }
+      #player-boxes { position: absolute; top: 0; right: 0; font-family: monospace;}
+    </style>
+    <link href="ratchet.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div id="container"></div>
+
+<nav class="bar-tab" id="tools" >
+  First click in the screen (and click OK to disable mouse cursor).
+  "A" and "D" move left and right. "Space" jumps. "Q" and "E" change axes.
+   For debugging: the Mouse moves the camera (to see the magic).
+</nav>
+
+<div id="player-boxes">
+
+</div>
+
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>
