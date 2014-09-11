@@ -64,7 +64,7 @@ game.appendTo(container)
 var createPlayer = player(game)
 var substack = createPlayer('substack.png')
 substack.possess()
-var initialCoords = [0,10,0];
+var initialCoords = [0,5,0];
 substack.yaw.position.set(initialCoords[0], initialCoords[1], initialCoords[2]);
 
 
