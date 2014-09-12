@@ -37,11 +37,25 @@ createGame.prototype.collideTerrain = collideTerrain;
 // setup the game and add some trees
 var game = createGame({
   view: view,
-  generate: myMap,// voxel.generator['Hill'],
+  generate: myMap,
   chunkDistance: 2,
   materials: myTextures,
   worldOrigin: [0, 0, 0],
-  controls: { discreteFire: true }
+  controls: { discreteFire: true },
+  keybindings: {
+      '<up>': 'forward'
+    , '<left>': 'left'
+    , '<down>': 'backward'
+    , '<right>': 'right'
+    , '<mouse 1>': 'fire'
+    , '<mouse 2>': 'firealt'
+    , '<space>': 'jump'
+    , '<shift>': 'crouch'
+    , '<control>': 'alt'
+    , 'A': 'rotate_counterclockwise'
+    , 'D': 'rotate_clockwise'
+  }
+
 })
 
 window.game = game // for debugging
@@ -72,7 +86,59 @@ substack.yaw.position.set(initialCoords[0], initialCoords[1], initialCoords[2]);
 var rotatingCameraTo = null;
 var rotatingCameraDir = 0;
 
-game.on('tick', function(){
+game.on('tick', function() {
+  // Support climbing if there is a climbing tile behind the player
+  var cameraType = game.controlling.rotation.y / Math.PI * 2;
+  cameraType = Math.round(cameraType).mod(4);
+
+  var scaleJustToBeSafe = 1.5;
+  var cameraDir = 1;
+  var cameraAxis;
+  var cameraPerpendicAxis;
+  if (cameraType >= 2) { cameraDir = -1; }
+  if (cameraType.mod(2) == 0)  { cameraAxis = 0/*x*/; cameraPerpendicAxis = 2; }
+  else                         { cameraAxis = 2/*z*/; cameraPerpendicAxis = 0; }
+
+  y = game.controlling.aabb().base[1];
+  myBlock = this.sparseCollisionMap[cameraType]['' + Math.floor(game.controlling.aabb().base[cameraAxis]) + '|' + y];
+
+  // if (game.controls.state.climbing && !game.controls.state.forward) {
+  //   game.controlling.velocity.y = 0;
+  // } else if (game.controls.state.climbing && game.controls.state.forward) {
+  //   game.controlling.position.y += .1;
+  // } else if (!game.controls.state.climbing && game.controls.state.forward && myBlock != null) {
+  //   game.controls.state.climbing = true;
+  //   game.controlling.velocity.y = 0;
+  // }
+});
+
+game.on('tick', function() {
+
+  if (!rotatingCameraDir && game.controls.state.rotate_clockwise) {
+    // 'D' was pressed
+    // snap to 90degrees
+    y = game.controlling.rotation.y;
+    y = Math.round(y * 2 / Math.PI);
+    y += 1;
+    rotatingCameraDir = 1;
+    rotatingCameraTo = y * Math.PI / 2;
+    // Reset if te mouse moved the camera
+    game.controlling.pitch.rotation.x = 0;
+    game.controlling.pitch.rotation.x = 0;
+  } else if (!rotatingCameraDir && game.controls.state.rotate_counterclockwise) {
+    // 'A' was pressed
+    // Rotating the avatar implicitly rotates the camera in it's head
+    // snap to 90degrees
+    y = game.controlling.rotation.y;
+    y = Math.round(y * 2 / Math.PI);
+    y -= 1;
+    rotatingCameraDir = -1;
+    rotatingCameraTo = y * Math.PI / 2;
+    // Reset if te mouse moved the camera
+    game.controlling.pitch.rotation.x = 0;
+    game.controlling.pitch.rotation.x = 0;
+  }
+
 
   if (this.controlling.aabb().base[1] < -20) {
     alert('You died a horrible death. Try again.');
@@ -137,38 +203,6 @@ game.on('tick', function(){
   }
 })
 
-
-window.addEventListener('keydown', function(ev) {
-  if (ev.keyCode === 'Q'.charCodeAt(0)) {
-    // Rotating the avatar implicitly rotates the camera in it's head
-    // snap to 90degrees
-    y = game.controlling.rotation.y;
-    y = Math.round(y * 2 / Math.PI);
-    y -= 1;
-    console.log('rotating to ', y);
-    rotatingCameraDir = -1;
-    rotatingCameraTo = y * Math.PI / 2;
-    //game.controlling.rotation.y = y * Math.PI / 2;
-    game.controlling.rotation.x = 0;
-    game.controlling.rotation.z = 0;
-    // buildCollisionMap(y);
-  }
-
-  if (ev.keyCode === 'E'.charCodeAt(0)) {
-    // snap to 90degrees
-    y = game.controlling.rotation.y;
-    y = Math.round(y * 2 / Math.PI);
-    y += 1;
-    console.log('rotating to ', y);
-    rotatingCameraDir = 1;
-    rotatingCameraTo = y * Math.PI / 2;
-    // game.controlling.rotation.y = y * Math.PI / 2;
-    game.controlling.rotation.x = 0;
-    game.controlling.rotation.z = 0;
-    // buildCollisionMap(y);
-  }
-
-})
 
 
 var buildCollisionMap = function() {
