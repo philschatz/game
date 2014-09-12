@@ -15,7 +15,7 @@ colorMapper = function(hex) {
 
 var THE_MAP = window.THE_MAP = {};
 
-var position = {x:0, y:5, z:0}; // Offset for the map loader
+var position = {x:0, y:0, z:0}; // Offset for the map loader
 
 addVoxel = function(voxel, c) {
   var x = '' + voxel[0];

@@ -133,7 +133,7 @@ colorMapper = function(hex) {
 
 var THE_MAP = window.THE_MAP = {};
 
-var position = {x:0, y:5, z:0}; // Offset for the map loader
+var position = {x:0, y:0, z:0}; // Offset for the map loader
 
 addVoxel = function(voxel, c) {
   var x = '' + voxel[0];
@@ -274,17 +274,51 @@ game.on('tick', function() {
   if (cameraType.mod(2) == 0)  { cameraAxis = 0/*x*/; cameraPerpendicAxis = 2; }
   else                         { cameraAxis = 2/*z*/; cameraPerpendicAxis = 0; }
 
-  y = game.controlling.aabb().base[1];
+  y = Math.floor(game.controlling.aabb().base[1]);
   myBlock = this.sparseCollisionMap[cameraType]['' + Math.floor(game.controlling.aabb().base[cameraAxis]) + '|' + y];
+  myBlockBelow = this.sparseCollisionMap[cameraType]['' + Math.floor(game.controlling.aabb().base[cameraAxis]) + '|' + (y - 1)];
 
-  // if (game.controls.state.climbing && !game.controls.state.forward) {
-  //   game.controlling.velocity.y = 0;
-  // } else if (game.controls.state.climbing && game.controls.state.forward) {
-  //   game.controlling.position.y += .1;
-  // } else if (!game.controls.state.climbing && game.controls.state.forward && myBlock != null) {
+
+  if (game.controls.state.climbing && !(game.controls.state.forward || game.controls.state.backward) && myBlock != null) {
+    game.controlling.resting.y = true;
+    // prevent moving left/right (TODO: Unless there are tiles left/right)
+    game.controlling.resting.x = true;
+    game.controlling.resting.z = true;
+  } else if (game.controls.state.climbing && game.controls.state.forward) {
+    game.controlling.position.y += .1;
+    game.controlling.resting.y = true;
+    // prevent moving left/right (TODO: Unless there are tiles left/right)
+    game.controlling.resting.x = true;
+    game.controlling.resting.z = true;
+  } else if (game.controls.state.climbing && !(game.controls.state.forward || game.controls.state.backward) && myBlock == null) {
+    game.controls.state.climbing = false;
+    game.controlling.resting.y = false;
+  } else if (!game.controls.state.climbing && game.controls.state.forward && myBlock != null) {
+    game.controls.state.climbing = true;
+    game.controlling.resting.y = true;
+    // prevent moving left/right (TODO: Unless there are tiles left/right)
+    game.controlling.resting.x = true;
+    game.controlling.resting.z = true;
+
+  } else if (game.controls.state.climbing && game.controls.state.backward) {
+    game.controlling.position.y -= .1;
+    game.controlling.resting.y = true;
+    // prevent moving left/right (TODO: Unless there are tiles left/right)
+    game.controlling.resting.x = true;
+    game.controlling.resting.z = true;
+
+  // } else if (!game.controls.state.climbing && game.controls.state.backward && myBlock != null) {
   //   game.controls.state.climbing = true;
-  //   game.controlling.velocity.y = 0;
-  // }
+  //   game.controlling.resting.y = true;
+  } else if (!game.controls.state.climbing && game.controls.state.backward && myBlockBelow != null) {
+    // Allow climbing down when there is a block below
+    game.controls.state.climbing = true;
+    game.controlling.resting.y = true;
+    // prevent moving left/right (TODO: Unless there are tiles left/right)
+    game.controlling.resting.x = true;
+    game.controlling.resting.z = true;
+  }
+
 });
 
 game.on('tick', function() {
