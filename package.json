@@ -13,13 +13,16 @@
     "toolbar": "0.0.5"
   },
   "devDependencies": {
+    "beefy": "^2.1.1",
     "browserify": "1.17.3",
     "browservefy": "0.0.8",
+    "coffeeify": "^0.7.0",
     "minecraft-skin": "^0.1.2",
     "voxel": "^0.4.0",
     "voxel-view": "0.0.7"
   },
   "scripts": {
-    "start": "echo \"open localhost:8081/\" && ./node_modules/browservefy/bin/browservefy index.js:bundle.js 8081 --browserify=./node_modules/browserify/bin/cmd.js -- -d"
+    "test": "./node_modules/.bin/browserify index.coffee -o bundle.js --extension='.coffee' --transform coffeeify",
+    "start": "./node_modules/.bin/beefy index.coffee:bundle.js --live -- --extension='.coffee' --transform coffeeify"
   }
 }
