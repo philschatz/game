@@ -29,7 +29,7 @@ decode = (string) ->
   output
 
 
-buildFromHash = (hash=window.location.hash.substr(1))->
+buildFromHash = (hash=window.location.hash.substr(1), variantChooser) ->
   hashMask = null
   hashChunks = hash.split(':')
   chunks = {}
@@ -59,7 +59,11 @@ buildFromHash = (hash=window.location.hash.substr(1))->
       current.y += data[i++] - 32  if code.charAt(2) is '1'
       current.z += data[i++] - 32  if code.charAt(3) is '1'
       current.c += data[i++] - 32  if code.charAt(4) is '1'
-      addVoxel current.x, current.y, current.z, current.c  if code.charAt(0) is '1'
+
+      if code.charAt(0) is '1'
+        color = current.c
+        color = variantChooser(color) if variantChooser
+        addVoxel current.x, current.y, current.z, color
 
   return getVoxel
 
