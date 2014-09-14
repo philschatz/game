@@ -52,11 +52,8 @@ hash =  ':A/aWpaieaePaiiaiiammaiiakkaiiaSdaoYakcaieaXoShahfbbhhYhShYfShYhShYfShY
 variantMapper = (c) ->
   # Generates variants randomly
   variants = textureVariantColors[c]
-  if variants
-    newC = variants[Math.floor(Math.random() * variants.length)]
-    newC
-  else
-    c
+  return c unless variants
+  return variants[Math.floor(Math.random() * variants.length)]
 
 map = fromHash(hash, variantMapper)
 
