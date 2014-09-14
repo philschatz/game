@@ -14,7 +14,7 @@ skin = require('minecraft-skin')
 voxel = require('voxel')
 voxelView = require('voxel-view')
 collideTerrain = require('./collide-terrain')
-mapConfig = require('./my-map')
+mapConfig = require('./maps/my')
 myMap = mapConfig.map
 myTextures = mapConfig.textures
 THREE = createGame.THREE
@@ -24,7 +24,7 @@ view = new voxelView THREE,
   height: window.innerHeight
 
 view.camera.position.z = 1000 # so the camera is never 'inside' the voxels. Should change based on the min/max depth when camera is rotated
-view.camera.scale.set(.5, .5, .5)
+view.camera.scale.set(.85, .85, .85)
 
 # Stupid negative modulo in JS
 Number::mod = (n) ->
@@ -79,7 +79,7 @@ game.appendTo(container)
 createPlayer = player(game)
 substack = createPlayer('substack.png')
 substack.possess()
-initialCoords = [0, 5, 0]
+initialCoords = mapConfig.playerPosition or [0, 5, 0]
 substack.yaw.position.set initialCoords[0], initialCoords[1], initialCoords[2]
 rotatingCameraTo = null
 rotatingCameraDir = 0
