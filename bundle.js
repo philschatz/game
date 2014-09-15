@@ -49019,7 +49019,7 @@ require.define("/maps/lighthouse.coffee",function(require,module,exports,__dirna
 
   fromHash = require('./from-hash');
 
-  textures = ['stone', ['grass', 'grass', 'square-light-pyramid-in'], 'square-medium-pyramid-in', 'square-dark-pyramid-in', ['grass', 'grass', 'square-grasstop-light-pyramid-out'], 'bridge-post-top', 'bridge', 'bridge-post', 'obelisk-3', 'obelisk-2', 'obelisk-1', 'lighthouse-red', 'lighthouse-white'];
+  textures = ['stone', ['grass', 'grass', 'square-light-pyramid-in'], 'square-medium-pyramid-in', 'square-dark-pyramid-in', ['grass', 'grass', 'square-grasstop-light-pyramid-out'], 'bridge-post-top', 'bridge', 'bridge-post-1', 'obelisk-3', 'obelisk-2', 'obelisk-1', 'lighthouse-red', 'lighthouse-white'];
 
   textureVariants = [null, ['square-light-pyramid-in', 'square-light-pyramid-out', 'square-light-square-in', 'square-light-square-out'], ['square-medium-pyramid-in', 'square-medium-pyramid-out', 'square-medium-square-in', 'square-medium-square-out'], ['square-dark-pyramid-in', 'square-dark-pyramid-out', 'square-dark-square-big', 'square-dark-square-in'], ['square-grasstop-light-pyramid-out', 'square-grasstop-light-square-out'], null, null, ['bridge-post-1', 'bridge-post-2']];
 
@@ -49341,6 +49341,9 @@ require.define("/index.coffee",function(require,module,exports,__dirname,__filen
     if (this.controlling.aabb().base[1] < -20) {
       alert('You died a horrible death. Try again.');
       this.controlling.moveTo(initialCoords[0], initialCoords[1], initialCoords[2]);
+      this.controlling.velocity.x = 0;
+      this.controlling.velocity.y = 0;
+      this.controlling.velocity.z = 0;
     }
     boxes = '';
     cameraType = this.controlling.rotation.y / Math.PI * 2;

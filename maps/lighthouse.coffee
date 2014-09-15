@@ -8,7 +8,7 @@ textures = [
   ['grass', 'grass', 'square-grasstop-light-pyramid-out']
   'bridge-post-top'
   'bridge'
-  'bridge-post'
+  'bridge-post-1'
   'obelisk-3'
   'obelisk-2'
   'obelisk-1'

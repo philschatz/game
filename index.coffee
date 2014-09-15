@@ -178,7 +178,10 @@ game.on 'tick', ->
     game.controlling.pitch.rotation.x = 0
   if @controlling.aabb().base[1] < -20
     alert 'You died a horrible death. Try again.'
-    @controlling.moveTo initialCoords[0], initialCoords[1], initialCoords[2]
+    @controlling.moveTo(initialCoords[0], initialCoords[1], initialCoords[2])
+    @controlling.velocity.x = 0
+    @controlling.velocity.y = 0
+    @controlling.velocity.z = 0
 
   # player debugging
   boxes = ''
