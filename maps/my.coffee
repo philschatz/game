@@ -5,6 +5,6 @@ if window.location.hash.length > 2
     map: mapFromHash()
     textures: lighthouseMap.textures
 else
-  mapInfo = lighthouseMap
+  mapInfo = lighthouseMap.build()
 
 module.exports = mapInfo

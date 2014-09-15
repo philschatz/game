@@ -49005,7 +49005,7 @@ require.define("/maps/my.coffee",function(require,module,exports,__dirname,__fil
       textures: lighthouseMap.textures
     };
   } else {
-    mapInfo = lighthouseMap;
+    mapInfo = lighthouseMap.build();
   }
 
   module.exports = mapInfo;
@@ -49015,9 +49015,11 @@ require.define("/maps/my.coffee",function(require,module,exports,__dirname,__fil
 });
 
 require.define("/maps/lighthouse.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
-  var fromHash, hash, map, newColor, origColor, playerPosition, textureVariantAry, textureVariantColors, textureVariants, textures, variantMapper, variantName, variantNames, _i, _j, _len, _len1;
+  var fromHash, hash, newColor, origColor, playerPosition, textureVariantAry, textureVariantColors, textureVariants, textures, variantMapper, variantName, variantNames, _i, _j, _len, _len1;
 
   fromHash = require('./from-hash');
+
+  hash = ':A/aWpaieaePaiiaiiammaiiakkaiiaSdaoYakcaieaXoShahfbbhhYhShYfShYhShYfShYhYhSfYhShYhSfYhShYhSfYhShYhSfYhShSeYfSfYhSfYfSfYhSfYfSfYhSfYfahfYfYfShYfSfYfShYfSfYfShYfSfYfShYfSfSiYhShYfShYhWhhYfYfShYhYhShYfYfShYhYhShYfYfShYhYhYhSfSfYhShShYhSfSfYhShShYhSfaihSfSfahhSfaffYhSfYfSfYhaffYhaffYhaffYhSfYfahfYfafhSfYfShYfSfYfShYfSfYfShaffShaffSiafeahhYfaihYeaihShYfSfYfShaqmfYhbiShShYhYhYhYhYhYhaadSfSfSfamlSfSfSfSfabfYhYhYhYhYhcahShShShShShShYhYhYhYhYhYhSfSfSfSfSfSfYfYfYfYfYfbeifSfSfSfSfahhSfahhSfajhSfahhSfahhSfahhSfSiShShSkShShffeffShShafefhihhSfYcShaffShaffShafeShShUhSfSfbhfhSfSfbfffSfSfSfSfYhYhYjYhYhYhaahYhYhYhaefYhakhShShShShShShShShShaffShbfehYfThfShaffShYfYfYfcfhSfSfSfSfSfSfSfSfSfSfYhYhYhYhYhYhYhYhShShShShShShShShShShaffYfahhYfYfYfYfYfYfbfhfShYfSfSfSeSfSfSbSfSfYhYhYmaXtSfSfSeSfSfSbSfSfYoajhSfYhafiShSkShShShShShShYhaefShaffShaffShaffShadfShaffShddhjSfSfSfSfSfSfSfSfSfSfSfSfSfYhYhYhYhYhYhYhYhYhYhYhYhYhShShShShShShShShShShShShShYfYfYfYfYfYfYfYfYfYfYfYfSfSfSfSfSfSfSfSfSfSfSfSfahrSfSfSfSfSfSfSfSfSfSfSfahrSfSfSfSfSfSfSfSfSfSfSffaalcYhYhShYfYfappYhfYmVmYfYfYfTfhVheVeiUfUfUfUfUfUfUfdcpefjfhhYfYfYfXYfhUhUhUhUhUhUhUhUhccYUhUhUhUhUhUhUhUhVhefjfhhYfYfYfShYhYhYhYhYhYhYhYhYhYhYhShYfYfYfYfYfYfYfYfYfYfYffoYihUhUhUhUhUhUhUhUhVhedcXiUhUhUhUhUhUhUhUhVhedcYiUfUiUhUhUhUhUhUhVheXZhbShShShShShShShShShShShShShYfYfYfYfYfUhUhUhUhVikShShShShShXfbdShShShShShfehbjYfYfYfdkfdYfYeYfajhZfhUfYhYhYdajhYfYfYfajhYeYfajhYeYffiffhYfahfYfehhhfehffbfffbhihZffShShYkYfYfYfffhcjYhYhYhYhShYfYfYfYfShYhYhYhYhShYfYfYfYfShYhYhYhYhfehekVhhVhhfiddabmRiYhYhYhYhYhYhYhYhYhYhYhblkeSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShahVShShShShShShShShShShShYhSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShYhSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShYhSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShfahZnYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShSh';
 
   textures = ['stone', ['grass', 'grass', 'square-light-pyramid-in'], 'square-medium-pyramid-in', 'square-dark-pyramid-in', ['grass', 'grass', 'square-grasstop-light-pyramid-out'], 'bridge-post-top', 'bridge', 'bridge-post-1', 'obelisk-3', 'obelisk-2', 'obelisk-1', 'lighthouse-red', 'lighthouse-white'];
 
@@ -49043,13 +49045,7 @@ require.define("/maps/lighthouse.coffee",function(require,module,exports,__dirna
     }
   }
 
-  console.log('textures:', textures);
-
-  console.log('textureVariantColors: ', textureVariantColors);
-
   playerPosition = [1, 7, 3];
-
-  hash = ':A/aWpaieaePaiiaiiammaiiakkaiiaSdaoYakcaieaXoShahfbbhhYhShYfShYhShYfShYhYhSfYhShYhSfYhShYhSfYhShYhSfYhShSeYfSfYhSfYfSfYhSfYfSfYhSfYfahfYfYfShYfSfYfShYfSfYfShYfSfYfShYfSfSiYhShYfShYhWhhYfYfShYhYhShYfYfShYhYhShYfYfShYhYhYhSfSfYhShShYhSfSfYhShShYhSfaihSfSfahhSfaffYhSfYfSfYhaffYhaffYhaffYhSfYfahfYfafhSfYfShYfSfYfShYfSfYfShaffShaffSiafeahhYfaihYeaihShYfSfYfShaqmfYhbiShShYhYhYhYhYhYhaadSfSfSfamlSfSfSfSfabfYhYhYhYhYhcahShShShShShShYhYhYhYhYhYhSfSfSfSfSfSfYfYfYfYfYfbeifSfSfSfSfahhSfahhSfajhSfahhSfahhSfahhSfSiShShSkShShffeffShShafefhihhSfYcShaffShaffShafeShShUhSfSfbhfhSfSfbfffSfSfSfSfYhYhYjYhYhYhaahYhYhYhaefYhakhShShShShShShShShShaffShbfehYfThfShaffShYfYfYfcfhSfSfSfSfSfSfSfSfSfSfYhYhYhYhYhYhYhYhShShShShShShShShShShaffYfahhYfYfYfYfYfYfbfhfShYfSfSfSeSfSfSbSfSfYhYhYmaXtSfSfSeSfSfSbSfSfYoajhSfYhafiShSkShShShShShShYhaefShaffShaffShaffShadfShaffShddhjSfSfSfSfSfSfSfSfSfSfSfSfSfYhYhYhYhYhYhYhYhYhYhYhYhYhShShShShShShShShShShShShShYfYfYfYfYfYfYfYfYfYfYfYfSfSfSfSfSfSfSfSfSfSfSfSfahrSfSfSfSfSfSfSfSfSfSfSfahrSfSfSfSfSfSfSfSfSfSfSffaalcYhYhShYfYfappYhfYmVmYfYfYfTfhVheVeiUfUfUfUfUfUfUfdcpefjfhhYfYfYfXYfhUhUhUhUhUhUhUhUhccYUhUhUhUhUhUhUhUhVhefjfhhYfYfYfShYhYhYhYhYhYhYhYhYhYhYhShYfYfYfYfYfYfYfYfYfYfYffoYihUhUhUhUhUhUhUhUhVhedcXiUhUhUhUhUhUhUhUhVhedcYiUfUiUhUhUhUhUhUhVheXZhbShShShShShShShShShShShShShYfYfYfYfYfUhUhUhUhVikShShShShShXfbdShShShShShfehbjYfYfYfdkfdYfYeYfajhZfhUfYhYhYdajhYfYfYfajhYeYfajhYeYffiffhYfahfYfehhhfehffbfffbhihZffShShYkYfYfYfffhcjYhYhYhYhShYfYfYfYfShYhYhYhYhShYfYfYfYfShYhYhYhYhfehekVhhVhhfiddabmRiYhYhYhYhYhYhYhYhYhYhYhblkeSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShahVShShShShShShShShShShShYhSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShYhSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShYhSfSfSfSfSfSfSfSfSfSfSfYhShShShShShShShShShShShfahZnYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShShXhhhYfYfYfSfSfSfYhYhYhShShXhhfYfYfYfSfSfSfYhYhYhShSh';
 
   variantMapper = function(c) {
     var variants;
@@ -49060,12 +49056,17 @@ require.define("/maps/lighthouse.coffee",function(require,module,exports,__dirna
     return variants[Math.floor(Math.random() * variants.length)];
   };
 
-  map = fromHash(hash, variantMapper);
-
   module.exports = {
-    map: map,
     textures: textures,
-    playerPosition: playerPosition
+    build: function() {
+      var map;
+      map = fromHash(hash, variantMapper);
+      return {
+        map: map,
+        textures: textures,
+        playerPosition: playerPosition
+      };
+    }
   };
 
 }).call(this);
