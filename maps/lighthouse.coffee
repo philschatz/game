@@ -22,6 +22,9 @@ textureVariants = [
   ['square-medium-pyramid-in', 'square-medium-pyramid-out', 'square-medium-square-in', 'square-medium-square-out']
   ['square-dark-pyramid-in', 'square-dark-pyramid-out', 'square-dark-square-big', 'square-dark-square-in']
   ['square-grasstop-light-pyramid-out', 'square-grasstop-light-square-out']
+  null
+  null
+  ['bridge-post-1', 'bridge-post-2']
 ]
 
 
