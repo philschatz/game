@@ -7,7 +7,7 @@ module.exports = new class Walking
       when  null, \
             ActionTypes.IDLE, \
             ActionTypes.SLIDING, \
-            ActionTypes.IDLE, \
+            # ActionTypes.CLIMBING, \
             ActionTypes.TEETERING, \
             ActionTypes.GRABBING, \
             ActionTypes.PUSHING, \
